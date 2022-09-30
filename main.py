@@ -86,5 +86,6 @@ definition.grid(column=0, row=2, columnspan=3)
 # user entry
 usr_input = tk.Entry(width=14, font=("Verdana", 16, "normal"))
 usr_input.grid(column=3, row=1)
+usr_input.focus_set()
 
 root.mainloop()
