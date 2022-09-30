@@ -18,51 +18,39 @@ REQ_COLS = ["word_spanish", "word_english", "mood_english", "tense_english", "yo
 
 def read_data(word: str, tense: str):
     data_df = pandas.read_csv(csv_data_path, usecols=REQ_COLS)
-    # word_df = data_df[data_df["word_spanish"] == word]
     # allows for spanish or english word entry
     for (index, series) in data_df.iterrows():
         if word in series["word_english"] and series["mood_english"] == "Indicative" and series["tense_english"] == tense:
             print(type(series))
-            print(series)
             return series
-        # problem with this is i need it to search for the exact match in the mood_spanish column and not a just a substring
-        elif series["mood_english"] == "Indicative" and series["tense_english"] == tense:
+        elif word == series["word_spanish"] and series["mood_english"] == "Indicative" and series["tense_english"] == tense:
             print(type(series))
-            print(series)
             return series
-        # # use mood to ensure there is only one result for each tense
-        # mood_df = word_df[word_df["mood_english"] == "Indicative"]
-        # # pull the user chosen tense of the word
-        # word_series = mood_df[mood_df["tense_english"] == tense]
-        # print(type(word_series))
-        # print(word_series)
-        # return word_series
-
 
 def update_display(word: str, tense: str):
     word_series = read_data(word, tense)
-    if len(word_series) == 0:
+    if word_series is None:
         messagebox.showinfo(title=None,
                             message="Word not found. Please check the spelling and try again. Or perhaps the word is "
                                     "not in the database.")
     else:
-        yo = word_series["yo"].item()
+        yo = word_series["yo"]
         canvas.itemconfig(yo_word, text=yo)
-        tu = word_series["tu"].item()
+        tu = word_series["tu"]
         canvas.itemconfig(tu_word, text=tu)
-        el_ella = word_series["el/ella"].item()
+        el_ella = word_series["el/ella"]
         canvas.itemconfig(el_ella_word, text=el_ella)
-        ellos_ellas = word_series["ellos"].item()
+        ellos_ellas = word_series["ellos"]
         canvas.itemconfig(ellos_ellas_word, text=ellos_ellas)
-        definition.config(text=word_series["word_english"].item())
+        definition.config(text=word_series["word_english"])
 
 
+# ui
+# -------------------------------------------------------------------------------------#
 root = tk.Tk()
 root.config(padx=50, pady=25, bg=BACKGROUND_COLOR)
 root.title("MCH")
 
-# ui
-# -------------------------------------------------------------------------------------#
 canvas = tk.Canvas(width=1000, height=551, bg=BACKGROUND_COLOR, highlightthickness=0)
 card_image = tk.PhotoImage(file=image_path)
 background = canvas.create_image(400, 268, image=card_image)
