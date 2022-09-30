@@ -4,12 +4,12 @@ from tkinter import messagebox
 import os
 
 # development paths
-# image_path = os.path.abspath("./images/card_front.png")
-# csv_data_path = os.path.abspath("./spanish-data.csv")
+image_path = os.path.abspath("./images/card_front.png")
+csv_data_path = os.path.abspath("./spanish-data.csv")
 
 # production paths
-image_path = os.path.abspath("../images/card_front.png")
-csv_data_path = os.path.abspath("../spanish-data.csv")
+# image_path = os.path.abspath("../images/card_front.png")
+# csv_data_path = os.path.abspath("../spanish-data.csv")
 
 BACKGROUND_COLOR = "#B1DDC6"
 HEADING_LABEL = ("Verdana", 14, "italic")
@@ -86,5 +86,8 @@ definition.grid(column=0, row=2, columnspan=3)
 # user entry
 usr_input = tk.Entry(width=14, font=("Verdana", 16, "normal"))
 usr_input.grid(column=3, row=1)
+usr_input.focus_set()
+
+root.bind('<Enter>', update_display(usr_input.get(), "Present"))
 
 root.mainloop()
