@@ -3,8 +3,6 @@ import tkinter as tk
 from tkinter import messagebox
 import os
 
-# TODO: validation
-
 image_path = os.path.abspath("./images/card_front.png")
 csv_data_path = os.path.abspath("./spanish-data.csv")
 
@@ -13,19 +11,18 @@ HEADING_LABEL = ("Verdana", 14, "italic")
 WORD_LABEL = ("Verdana", 18, "normal")
 BUTTON_LABEL = ("Verdana", 12, "normal")
 # only parse required columns to save memory
-REQ_COLS = ["word_spanish", "word_english", "mood_english", "tense_english", "yo", "tu", "el/ella", "ellos"]
+REQUIRED_COLUMNS = ["word_spanish", "word_english", "mood_english", "tense_english", "yo", "tu", "el/ella", "ellos"]
 
 
 def read_data(word: str, tense: str):
-    data_df = pandas.read_csv(csv_data_path, usecols=REQ_COLS)
+    data_df = pandas.read_csv(csv_data_path, usecols=REQUIRED_COLUMNS)
     # allows for spanish or english word entry
     for (index, series) in data_df.iterrows():
         if word in series["word_english"] and series["mood_english"] == "Indicative" and series["tense_english"] == tense:
-            print(type(series))
             return series
         elif word == series["word_spanish"] and series["mood_english"] == "Indicative" and series["tense_english"] == tense:
-            print(type(series))
             return series
+
 
 def update_display(word: str, tense: str):
     word_series = read_data(word, tense)
