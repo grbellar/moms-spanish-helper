@@ -3,13 +3,15 @@ import tkinter as tk
 from tkinter import messagebox
 import os
 
-# development paths
-# image_path = os.path.abspath("./images/card_front.png")
-# csv_data_path = os.path.abspath("./spanish-data.csv")
-
-# production paths
-image_path = os.path.abspath("../images/card_front.png")
-csv_data_path = os.path.abspath("../spanish-data.csv")
+DEBUG = True
+if DEBUG:
+    # development paths
+    image_path = os.path.abspath("./images/card_front.png")
+    csv_data_path = os.path.abspath("./spanish-data.csv")
+else:
+    # production paths
+    image_path = os.path.abspath("../images/card_front.png")
+    csv_data_path = os.path.abspath("../spanish-data.csv")
 
 BACKGROUND_COLOR = "#B1DDC6"
 HEADING_LABEL = ("Verdana", 14, "italic")
